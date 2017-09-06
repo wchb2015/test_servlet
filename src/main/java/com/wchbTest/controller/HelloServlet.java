@@ -1,5 +1,6 @@
 package com.wchbTest.controller;
 
+import com.wchbTest.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,17 +17,20 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LOG.info("haha {}", req.getHeaderNames());
+        synchronized (this) {
+            LOG.info("haha {}", req.getHeaderNames());
 
-        try {
-            LOG.info("sleep 4秒");
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                LOG.info("sleep 4秒");
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            resp.setStatus(200);
+            resp.setHeader("haha", "hehe");
+
+            new UserService().save();
+            LOG.info("success!!!");
         }
-        resp.setStatus(200);
-        resp.setHeader("haha", "hehe");
-
-        LOG.info("success!!!");
     }
 }
