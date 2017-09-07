@@ -17,20 +17,21 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        synchronized (this) {
-            LOG.info("haha {}", req.getHeaderNames());
+        LOG.info("haha {}", req.getHeaderNames());
 
-            try {
-                LOG.info("sleep 4秒");
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            resp.setStatus(200);
-            resp.setHeader("haha", "hehe");
+        try {
+            LOG.info("sleep 4秒");
 
-            new UserService().save();
-            LOG.info("success!!!");
+            Thread.sleep(4000);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        resp.setStatus(200);
+        resp.setHeader("haha", "hehe");
+
+        new UserService().save();
+        LOG.info("success!!!");
     }
+
 }
