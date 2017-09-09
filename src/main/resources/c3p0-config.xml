@@ -4,7 +4,11 @@
 
     <named-config name="test_app">
 
-
+        <property name="user">wchb</property>
+        <property name="password"></property>
+        <property name="jdbcUrl">jdbc:mysql://120.77.46.197:3306/finance?characterEncoding=utf-8&amp;useSSL=false&amp;
+            serverTimezone=UTC&amp;autoReconnect=true
+        </property>
         <property name="driverClass">com.mysql.jdbc.Driver</property>
 
         <property name="acquireIncrement">2</property>

@@ -13,7 +13,6 @@ import java.io.OutputStream;
 
 import com.alibaba.fastjson.JSON;
 
-
 public class HelloServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelloServlet.class);
