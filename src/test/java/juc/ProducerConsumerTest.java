@@ -4,11 +4,24 @@ package juc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 演示一下等待唤醒机制.
+ */
 public class ProducerConsumerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProducerConsumerTest.class);
-    
+
     public static void main(String[] args) {
+
+        Clerk clerk = new Clerk();
+
+        Producer producer = new Producer(clerk);
+        Consumer consumer = new Consumer(clerk);
+
+        new Thread(producer, "生产者1").start();
+        new Thread(consumer, "消费者1").start();
+
+        LOG.info(" end , 剩余库存:{}", clerk.getProduct());
 
     }
 }
@@ -20,22 +33,39 @@ class Clerk {
 
     private int product = 0;
 
+    public int getProduct() {
+        return product;
+    }
+
     //进货
     public synchronized void get() {
-        if (product > 10) {
+        while (product > 1) {
             LOG.info("产品已经满了!");
-        } else {
-            LOG.info("进货成功,现在的库存:{}", ++product);
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+        LOG.info("进货成功,现在的库存:{}", ++product);
+        this.notifyAll();
+
     }
 
     //卖货
     public synchronized void sale() {
-        if (product <= 0) {
+        while (product <= 0) {
             LOG.info("缺货!");
-        } else {
-            LOG.info("售货成功,现在的库存:{}", --product);
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        
+        LOG.info("售货成功,现在的库存:{}", --product);
+        this.notifyAll();
     }
 }
 
@@ -56,6 +86,13 @@ class Producer implements Runnable {
     public void run() {
 
         for (int i = 0; i < 20; i++) {
+
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             clerk.get();
         }
 

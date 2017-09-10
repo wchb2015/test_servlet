@@ -25,7 +25,6 @@ public class CASTest {
 
 }
 
-
 class CompareAndSwap {
 
     private Logger LOG = LoggerFactory.getLogger(CompareAndSwap.class);
