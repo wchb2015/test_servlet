@@ -19,6 +19,7 @@ public class ProducerConsumerTest {
         Consumer consumer = new Consumer(clerk);
 
         new Thread(producer, "生产者1").start();
+        new Thread(producer, "生产者2").start();
         new Thread(consumer, "消费者1").start();
 
         LOG.info(" end , 剩余库存:{}", clerk.getProduct());
@@ -63,7 +64,7 @@ class Clerk {
                 e.printStackTrace();
             }
         }
-        
+
         LOG.info("售货成功,现在的库存:{}", --product);
         this.notifyAll();
     }
@@ -74,7 +75,6 @@ class Clerk {
 class Producer implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(Producer.class);
-
 
     private Clerk clerk;
 
