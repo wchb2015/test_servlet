@@ -15,8 +15,11 @@ public class CASTest {
             new Thread(() -> {
                 int expectedValue = cas.get();
                 int newValue = (int) (Math.random() * 100);
-                LOG.info("expectedValue:{},newValue:{}", expectedValue, newValue);
-                LOG.info("isSuccess:{},newValue:{}", cas.compareAndSet(expectedValue, newValue), cas.get());
+
+                boolean isSuccess = cas.compareAndSet(expectedValue, newValue);
+                newValue = cas.get();
+
+                LOG.info("isSuccess:{}, expectedValue:{},newValue:{},,newValue:{}", isSuccess, expectedValue, newValue, newValue);
             }).start();
         }
 
@@ -43,7 +46,7 @@ class CompareAndSwap {
             this.value = newValue;
         }
 
-        LOG.info("oldValue:{}", oldValue);
+//        LOG.info("oldValue:{}", oldValue);
         return oldValue;
     }
 
