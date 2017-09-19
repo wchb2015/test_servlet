@@ -36,10 +36,14 @@ public class HelloServlet extends HttpServlet {
         new UserService().save();
         LOG.info("success!!!");
 
-        String data = "中国";
+  /*      String data = "中国";
         String jsonString = JSON.toJSONString(data);
         OutputStream outputStream = resp.getOutputStream();
-        outputStream.write(jsonString.getBytes("UTF-8"));
+        outputStream.write(jsonString.getBytes("UTF-8"));*/
+
+        req.setAttribute("test", "hahaha");
+
+        req.getRequestDispatcher("/WEB-INF/pages/hello.jsp").forward(req, resp);
 
     }
 

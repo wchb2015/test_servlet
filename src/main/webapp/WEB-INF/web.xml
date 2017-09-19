@@ -14,6 +14,16 @@
         <url-pattern>/servlet/helloServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.wchbTest.controller.UserServlet</servlet-class>
+    </servlet>
+    　
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/servlet/users</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>TestFilter</filter-name>
         <filter-class>com.wchbTest.filter.TestFilter</filter-class>
