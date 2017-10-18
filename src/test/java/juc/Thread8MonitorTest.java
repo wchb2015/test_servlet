@@ -10,39 +10,45 @@ public class Thread8MonitorTest {
     private static final Logger LOG = LoggerFactory.getLogger(Thread8MonitorTest.class);
 
     public static void main(String[] args) {
-        Number number = new Number();
+        Number number1 = new Number();
         Number number2 = new Number();
 
         new Thread(() -> {
-            number.getOne();
-        }).start();
+            number1.getTwo();
+        }, "TWO___###").start();
 
         new Thread(() -> {
-            number2.getTwo();
-        }).start();
+            number1.getOne();
+        }, "ONE___###").start();
 
         new Thread(() -> {
-            number.getThree();
-        }).start();
+            number1.getThree();
+        }, "THREE1___###").start();
+
+        new Thread(() -> {
+            number1.getThree();
+        }, "THREE2___###").start();
+
+        new Thread(() -> {
+            number1.getThree();
+        }, "THREE3___###").start();
     }
 }
-
 
 class Number {
     private static final Logger LOG = LoggerFactory.getLogger(Number.class);
 
     public synchronized void getOne() {
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         LOG.info("one");
     }
 
     public synchronized void getTwo() {
+        try {
+            LOG.info("start sleep!~");
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         LOG.info("two");
     }
 
